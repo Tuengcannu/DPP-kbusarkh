@@ -14,13 +14,13 @@ def parse_board(board_text: str) -> Board:
     if not isinstance(board_text, str):
         raise InvalidBoardError("Board must be a string.")
 
-    rows = board_text.strip().splitlines()
+    rows = board_text.splitlines()
 
     if not rows:
         raise InvalidBoardError("Board cannot be empty.")
 
     
-    rows = [row.strip() for row in rows]
+    rows = [row for row in rows]
 
     if any(not row for row in rows):
         raise InvalidBoardError("Board cannot contain empty rows.")
@@ -84,7 +84,8 @@ def is_attacked_by_sliding_piece(
     ]
 
     size = len(board)
-
+    # for elm in directions:
+    #     print(elm)
     for dr, dc in directions:
         row = king_row + dr
         col = king_col + dc
@@ -93,7 +94,7 @@ def is_attacked_by_sliding_piece(
             piece = board[row][col]
 
             
-            if piece == ".":
+            if piece not in "PBRQK":
                 row += dr
                 col += dc
                 continue
